@@ -5,6 +5,7 @@ from photologue import models
 
 register = template.Library()
 
+
 def get_exif_data(photo, attr):
     value = photo.EXIF.get(attr)
     if value is None:
@@ -30,6 +31,7 @@ def get_exif_data(photo, attr):
         value = 'f/%.1f' % aperture
     return value
 
+
 @register.inclusion_tag('cmsplugin_photologue_pro/polaroid.html')
 def polaroid_thumbnail(photo, photosize=None, counter=''):
     if not photosize:
@@ -41,10 +43,12 @@ def polaroid_thumbnail(photo, photosize=None, counter=''):
         'counter': counter,
     }
 
+
 @register.simple_tag
 def exif(photo, attr):
     return get_exif_data(photo, attr)
 
-@register.assignment_tag
+
+@register.simple_tag
 def get_exif(photo, attr):
     return get_exif_data(photo, attr)
